@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Art of Getting Away With It</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    :root {
+      --bg: #0e0e0e;
+      --text: #e8e0d5;
+      --accent: #c0392b;
+      --gold: #c9a84c;
+      --muted: #888;
+      --card: #1a1a1a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Georgia', serif;
+      line-height: 1.7;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 5vw;
+      background: linear-gradient(160deg, #0e0e0e 55%, #1a0a08 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 80% 50%, rgba(192,57,43,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      font-weight: normal;
+      line-height: 1.1;
+      max-width: 14ch;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      color: var(--muted);
+      max-width: 55ch;
+      margin-bottom: 3rem;
+    }
+    .hero-scroll {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 5vw;
+    }
+    section.wide {
+      max-width: 1100px;
+    }
+
+    .section-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    h2 {
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: normal;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    p {
+      font-size: clamp(1rem, 1.8vw, 1.125rem);
+      color: #ccc;
+      margin-bottom: 1.25rem;
+      max-width: 68ch;
+    }
+    .pull-quote {
+      border-left: 3px solid var(--accent);
+      padding: 1.25rem 1.5rem;
+      margin: 2.5rem 0;
+      background: var(--card);
+    }
+    .pull-quote p {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-style: italic;
+      color: var(--text);
+      margin: 0;
+      max-width: 100%;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid #2a2a2a;
+      margin: 0 5vw;
+    }
+
+    /* ── CHART WRAPPERS ── */
+    .chart-wrap {
+      background: var(--card);
+      border: 1px solid #2a2a2a;
+      border-radius: 4px;
+      padding: 2rem 1.5rem 1.5rem;
+      margin: 2.5rem 0;
+      overflow: hidden;
+    }
+    .chart-title {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      font-weight: bold;
+      margin-bottom: 0.25rem;
+      color: var(--text);
+    }
+    .chart-dek {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      font-family: 'Courier New', monospace;
+    }
+    svg text { font-family: 'Georgia', serif; }
+
+    /* ── STAT CARDS (graphic 1) ── */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid #2a2a2a;
+      border-radius: 4px;
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+    }
+    .stat-card .big {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .stat-card .label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      line-height: 1.4;
+    }
+
+    /* ── TIMELINE (graphic 3) ── */
+    .timeline-wrap {
+      background: var(--card);
+      border: 1px solid #2a2a2a;
+      border-radius: 4px;
+      padding: 2rem 1.5rem 1.5rem;
+      margin: 2.5rem 0;
+    }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 1.25rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid #222;
+      align-items: start;
+    }
+    .tl-item:last-child { border-bottom: none; }
+    .tl-time {
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      padding-top: 0.1rem;
+      text-align: right;
+    }
+    .tl-content strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+    .tl-content span {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* ── STOLEN WORKS GRID ── */
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .work-card {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 3px;
+      padding: 1.25rem;
+    }
+    .work-card .work-title {
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+    .work-card .work-artist {
+      font-family: 'Courier New', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+    .work-card .work-val {
+      font-size: 0.85rem;
+      color: #bbb;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid #2a2a2a;
+      padding: 2.5rem 5vw;
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    footer a { color: var(--muted); text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 500px) {
+      .tl-item { grid-template-columns: 70px 1fr; gap: 0.75rem; }
+      .tl-time { font-size: 0.75rem; }
+      .chart-wrap { padding: 1.25rem 1rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<div class="hero">
+  <p class="hero-eyebrow">Art Crime &bull; Investigation &bull; Unsolved</p>
+  <h1>The Art of <em>Getting Away</em> With It</h1>
+  <p class="hero-sub">
+    Every year, tens of thousands of artworks vanish from museums, galleries, and private homes.
+    Most are never found. Almost no one goes to prison. And the thieves know it.
+  </p>
+  <p class="hero-scroll">Scroll to investigate &darr;</p>
+</div>
+
+<!-- ═══════════════════════════════ SECTION 1 ═══════════════════════════════ -->
+<section>
+  <p class="section-label">Part I</p>
+  <h2>A Perfect Crime — By the Numbers</h2>
+  <p>
+    Art theft sounds like something out of a movie: a laser grid, a tuxedo, a getaway
+    through the Parisian rain. The reality is far more mundane — and far more common.
+    An estimated <strong style="color:var(--gold)">50,000 art thefts</strong> occur every year worldwide,
+    making it one of the largest criminal enterprises on the planet, trailing only drugs,
+    money laundering, and arms trafficking.
+  </p>
+  <p>
+    The FBI estimates the black-market art trade is worth somewhere around
+    <strong style="color:var(--gold)">$7 billion annually</strong>. And yet the odds of prosecution
+    are almost laughably low. When your take has no serial number and your fence has a
+    Russian oligarch on speed dial, why wouldn't you try?
+  </p>
+</section>
+
+<!-- ── GRAPHIC 1: Stat Cards ── -->
+<section class="wide">
+  <div class="chart-wrap">
+    <div class="chart-title">How big is the problem?</div>
+    <div class="chart-dek">Global art theft, annually</div>
+    <div class="stat-grid" id="stat-grid"></div>
+    <div id="recovery-chart"></div>
+  </div>
+</section>
+
+<section>
+  <p>
+    That last number — just <strong style="color:var(--accent)">1.5%</strong> of cases ending in prosecution
+    — is what makes art theft so attractive to professional criminals. Interpol and the
+    FBI have dedicated art crime units, but they're small, underfunded, and dealing with
+    a global problem that respects no border.
+  </p>
+  <div class="pull-quote">
+    <p>"Art theft is one of the most underreported crimes in the world.
+    Owners are often too embarrassed — or too afraid of the insurance complications — to call the police."</p>
+  </div>
+  <p>
+    Much of what's stolen never makes it to auction. Instead, it circulates as collateral
+    in criminal networks — a Renoir as a down payment on a drug shipment, a stolen Degas
+    as a get-out-of-jail-free card to be handed back in exchange for a lighter sentence.
+    The paintings themselves are almost beside the point.
+  </p>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════ SECTION 2 ═══════════════════════════════ -->
+<section>
+  <p class="section-label">Part II</p>
+  <h2>The Most Stolen Artist in the World Is Probably Not Who You Think</h2>
+  <p>
+    If you were going to steal a painting, which artist would you choose? Picasso,
+    obviously — he's the most famous, the most expensive, the most recognizable name
+    in modern art. And yes, Picasso makes the list.
+  </p>
+  <p>
+    But the artist who has had more works stolen than almost any other is
+    <strong style="color:var(--gold)">Claude Monet</strong>. The man who painted haystacks and water lilies
+    has, improbably, become the patron saint of art thieves.
+  </p>
+  <p>
+    Why impressionists? They're expensive enough to matter, recognizable enough to sell
+    (or use as collateral), and numerous enough that the provenance is murky.
+    The same artists who were revolutionary in the 1870s are the targets of choice
+    in criminal networks today.
+  </p>
+</section>
+
+<!-- ── GRAPHIC 2: Bar Chart – Most Targeted Artists ── -->
+<section class="wide">
+  <div class="chart-wrap">
+    <div class="chart-title">Which artists are most often stolen?</div>
+    <div class="chart-dek">Number of known stolen works, selected artists</div>
+    <div id="artists-chart"></div>
+  </div>
+</section>
+
+<section>
+  <p>
+    Rembrandt — already a tragic figure who died broke — has had more than his share
+    of posthumous humiliation. His works have been stolen, lost, cut up, and forged
+    across centuries. The Dutch master's dark palette and intimate portraits make them
+    among the most recognizable works in Western art.
+  </p>
+  <p>
+    Which brings us to Boston. March 1990. The greatest art heist in history — and the
+    one that has never been solved.
+  </p>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════ SECTION 3 ═══════════════════════════════ -->
+<section>
+  <p class="section-label">Part III</p>
+  <h2>The Night Boston Lost Half a Billion Dollars</h2>
+  <p>
+    The Isabella Stewart Gardner Museum is a palazzo-style building in the Fenway
+    neighborhood of Boston — the kind of place where you feel like you're in Florence,
+    not Massachusetts. Isabella Gardner, an eccentric heiress, filled it with her
+    personal collection and stipulated in her will that nothing could be moved or changed
+    after her death. The empty frames still hang on the walls today.
+  </p>
+  <p>
+    In the early morning hours of <strong style="color:var(--gold)">March 18, 1990</strong>, two men
+    dressed as Boston police officers buzzed the security intercom. A guard — violating
+    museum protocol — let them in. What followed was 81 minutes that the FBI calls
+    the single largest private property theft in history.
+  </p>
+
+  <div class="works-grid">
+    <div class="work-card">
+      <div class="work-title">The Storm on the Sea of Galilee</div>
+      <div class="work-artist">Rembrandt van Rijn</div>
+      <div class="work-val">Est. value: $200M+<br>Only seascape Rembrandt ever painted</div>
+    </div>
+    <div class="work-card">
+      <div class="work-title">The Concert</div>
+      <div class="work-artist">Johannes Vermeer</div>
+      <div class="work-val">Est. value: $200M+<br>One of only 34 known Vermeers</div>
+    </div>
+    <div class="work-card">
+      <div class="work-title">Chez Tortoni</div>
+      <div class="work-artist">Édouard Manet</div>
+      <div class="work-val">Est. value: $10M+<br>Guard's logbook showed no sign-in that night</div>
+    </div>
+    <div class="work-card">
+      <div class="work-title">A Lady and Gentleman in Black</div>
+      <div class="work-artist">Rembrandt van Rijn</div>
+      <div class="work-val">Est. value: $140M<br>Cut from its frame with a knife</div>
+    </div>
+  </div>
+
+  <p>
+    Thirteen works in all. Total estimated value: <strong style="color:var(--gold)">$500 million</strong>.
+    The thieves spent about six and a half minutes per painting. They knew what they
+    wanted — or at least, they had a list.
+  </p>
+</section>
+
+<!-- ── GRAPHIC 3: Timeline ── -->
+<section class="wide">
+  <div class="chart-wrap timeline-wrap">
+    <div class="chart-title">The 81-Minute Heist</div>
+    <div class="chart-dek">March 18, 1990 — Isabella Stewart Gardner Museum, Boston</div>
+    <div id="timeline"></div>
+  </div>
+</section>
+
+<section>
+  <p>
+    By 2:45 AM, the thieves were gone. The guard was found handcuffed to a pipe in the
+    basement. No one saw the van leave. No cameras caught a usable image. No fingerprints,
+    no DNA, no witnesses.
+  </p>
+  <p>
+    The FBI has named suspects. The museum has offered a
+    <strong style="color:var(--gold)">$10 million reward</strong> — the largest private reward for
+    stolen art in history. More than three decades later, the case remains open.
+    The empty frames hang where the paintings used to be: a standing invitation to whoever
+    knows where they went.
+  </p>
+  <div class="pull-quote">
+    <p>
+      "We believe the art is still out there. Paintings of that caliber don't
+      just disappear. They're somewhere, in someone's possession, waiting."
+      <br><span style="font-size:0.8rem;color:var(--muted);font-style:normal;">— FBI Art Crime Team</span>
+    </p>
+  </div>
+  <p>
+    And that, in the end, is what makes art theft so different from any other crime.
+    The objects survive. The Rembrandt is still a Rembrandt whether it's on the wall of
+    the Rijksmuseum or rolled up in a storage unit in Philadelphia. The crime never
+    really ends — it just waits.
+  </p>
+</section>
+
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<footer>
+  <p>
+    <strong>Disclaimer:</strong> This narrative is a remix of the interactive infographic
+    <em>"Lost but not forgotten: A look at famous art heists around the world"</em>,
+    originally published at
+    <a href="https://www.informationisbeautifulawards.com/showcase/5597-lost-but-not-forgotten" target="_blank">
+      Information Is Beautiful Awards
+    </a>.
+    All data and stories are drawn from that original work.
+    This page was created for a class assignment only and makes no claim to original research.
+  </p>
+  <br>
+  <p>Data sources referenced in the original: Interpol, FBI Art Crime Team, Isabella Stewart Gardner Museum, Artnet News.</p>
+</footer>
+
+<script>
+/* ============================================================
+   GRAPHIC 1 — Stat Cards + Recovery Donut
+   ============================================================ */
+const stats = [
+  { big: "50,000", label: "estimated art thefts per year, worldwide" },
+  { big: "$7B",    label: "annual value of black-market art trade" },
+  { big: "10%",    label: "of stolen works ever recovered" },
+  { big: "1.5%",   label: "of cases end in prosecution" },
+];
+
+const grid = document.getElementById("stat-grid");
+stats.forEach(s => {
+  const card = document.createElement("div");
+  card.className = "stat-card";
+  card.innerHTML = `<div class="big">${s.big}</div><div class="label">${s.label}</div>`;
+  grid.appendChild(card);
+});
+
+// Recovery donut chart
+(function drawDonut() {
+  const container = document.getElementById("recovery-chart");
+  const W = Math.min(container.clientWidth, 500);
+  const H = 180;
+  const R = 65;
+  const cx = W / 2, cy = H / 2;
+
+  const svg = d3.select(container).append("svg")
+    .attr("viewBox", `0 0 ${W} ${H}`)
+    .attr("width", "100%");
+
+  const data = [
+    { label: "Never recovered", value: 90, color: "#c0392b" },
+    { label: "Recovered", value: 10, color: "#c9a84c" },
+  ];
+
+  const pie = d3.pie().value(d => d.value).sort(null);
+  const arc = d3.arc().innerRadius(R * 0.6).outerRadius(R);
+
+  const g = svg.append("g").attr("transform", `translate(${cx},${cy})`);
+  g.selectAll("path").data(pie(data)).join("path")
+    .attr("d", arc)
+    .attr("fill", d => d.data.color)
+    .attr("stroke", "#1a1a1a")
+    .attr("stroke-width", 2);
+
+  g.append("text").attr("text-anchor", "middle").attr("dy", "-0.25em")
+    .attr("fill", "#c9a84c").attr("font-size", "1.4rem").text("10%");
+  g.append("text").attr("text-anchor", "middle").attr("dy", "1.1em")
+    .attr("fill", "#888").attr("font-size", "0.65rem").text("RECOVERED");
+
+  // legend
+  const legend = svg.append("g").attr("transform", `translate(${cx + R + 20}, ${cy - 20})`);
+  data.forEach((d, i) => {
+    const row = legend.append("g").attr("transform", `translate(0, ${i * 22})`);
+    row.append("rect").attr("width", 12).attr("height", 12).attr("rx", 2).attr("fill", d.color);
+    row.append("text").attr("x", 18).attr("y", 10)
+      .attr("fill", "#ccc").attr("font-size", "0.78rem").text(d.label);
+  });
+})();
+
+
+/* ============================================================
+   GRAPHIC 2 — Horizontal Bar Chart: Most Stolen Artists
+   ============================================================ */
+(function drawBars() {
+  const container = document.getElementById("artists-chart");
+  const artists = [
+    { name: "Claude Monet",        value: 53 },
+    { name: "Rembrandt",           value: 47 },
+    { name: "Pablo Picasso",       value: 43 },
+    { name: "Edgar Degas",         value: 38 },
+    { name: "Vincent van Gogh",    value: 34 },
+    { name: "Henri Matisse",       value: 29 },
+    { name: "Pierre-Auguste Renoir", value: 25 },
+    { name: "Paul Cézanne",        value: 21 },
+    { name: "Georgia O'Keeffe",    value: 14 },
+    { name: "Berthe Morisot",      value: 10 },
+  ];
+
+  const margin = { top: 8, right: 60, bottom: 20, left: 145 };
+
+  function draw() {
+    d3.select(container).selectAll("*").remove();
+    const W = container.clientWidth || 600;
+    const H = artists.length * 34 + margin.top + margin.bottom;
+    const innerW = W - margin.left - margin.right;
+    const innerH = H - margin.top - margin.bottom;
+
+    const svg = d3.select(container).append("svg")
+      .attr("viewBox", `0 0 ${W} ${H}`)
+      .attr("width", "100%");
+
+    const x = d3.scaleLinear().domain([0, 60]).range([0, innerW]);
+    const y = d3.scaleBand()
+      .domain(artists.map(d => d.name))
+      .range([0, innerH])
+      .padding(0.28);
+
+    const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // grid lines
+    g.selectAll(".grid")
+      .data(x.ticks(5))
+      .join("line")
+      .attr("x1", d => x(d)).attr("x2", d => x(d))
+      .attr("y1", 0).attr("y2", innerH)
+      .attr("stroke", "#2a2a2a").attr("stroke-dasharray", "3,3");
+
+    // bars
+    g.selectAll(".bar")
+      .data(artists)
+      .join("rect")
+      .attr("class", "bar")
+      .attr("x", 0)
+      .attr("y", d => y(d.name))
+      .attr("width", d => x(d.value))
+      .attr("height", y.bandwidth())
+      .attr("fill", (d, i) => i === 0 ? "#c9a84c" : "#c0392b")
+      .attr("rx", 2);
+
+    // value labels
+    g.selectAll(".val-label")
+      .data(artists)
+      .join("text")
+      .attr("x", d => x(d.value) + 6)
+      .attr("y", d => y(d.name) + y.bandwidth() / 2 + 4)
+      .attr("fill", "#888")
+      .attr("font-size", "0.72rem")
+      .text(d => d.value);
+
+    // y-axis labels
+    g.selectAll(".y-label")
+      .data(artists)
+      .join("text")
+      .attr("x", -8)
+      .attr("y", d => y(d.name) + y.bandwidth() / 2 + 4)
+      .attr("text-anchor", "end")
+      .attr("fill", (d, i) => i === 0 ? "#c9a84c" : "#ccc")
+      .attr("font-size", "0.78rem")
+      .text(d => d.name);
+  }
+
+  draw();
+  const ro = new ResizeObserver(draw);
+  ro.observe(container);
+})();
+
+
+/* ============================================================
+   GRAPHIC 3 — Gardner Heist Timeline
+   ============================================================ */
+const events = [
+  { time: "1:24 AM",  title: "Security guard buzzes the thieves in",
+    desc: "Two men in Boston Police uniforms claim to be responding to a disturbance report. Guard violates protocol and admits them." },
+  { time: "1:28 AM",  title: "Guards handcuffed in the basement",
+    desc: "Both security guards are taped and cuffed to pipes in the basement. The thieves have free run of the museum." },
+  { time: "1:48 AM",  title: "Dutch Room — primary target",
+    desc: "Thieves take three Rembrandts, a Vermeer, a Manet, and a Flinck. They cut canvases from frames, leaving the gilded frames behind." },
+  { time: "2:15 AM",  title: "Short Gallery & other rooms",
+    desc: "Five Degas sketches, a Napoleonic finial, and a Chinese gu are removed. Thieves appear to be working from a list." },
+  { time: "2:41 AM",  title: "Motion sensors go dark",
+    desc: "The final movement is recorded. Thirteen works are gone. The thieves depart in an unknown vehicle." },
+  { time: "8:15 AM",  title: "Discovery",
+    desc: "The next security shift finds the guards. Boston Police are called. The FBI takes over within hours." },
+  { time: "2025 →",   title: "Still unsolved",
+    desc: "No arrests. $10M reward still unclaimed. The empty frames remain on the walls of the Gardner, per Isabella's will." },
+];
+
+const tlContainer = document.getElementById("timeline");
+events.forEach(e => {
+  const item = document.createElement("div");
+  item.className = "tl-item";
+  item.innerHTML = `
+    <div class="tl-time">${e.time}</div>
+    <div class="tl-content">
+      <strong>${e.title}</strong>
+      <span>${e.desc}</span>
+    </div>`;
+  tlContainer.appendChild(item);
+});
+</script>
+</body>
+</html>
