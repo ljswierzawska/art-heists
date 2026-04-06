@@ -7,7 +7,7 @@
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
     :root {
-      --bg: #0e0e0e;
+      --bg: #000;
       --text: #e8e0d5;
       --accent: #c0392b;
       --gold: #c9a84c;
@@ -31,16 +31,19 @@
       flex-direction: column;
       justify-content: center;
       padding: 60px 5vw;
-      background: linear-gradient(160deg, #0e0e0e 55%, #1a0a08 100%);
+      background: url('Dagmar_Rothschild.jpeg') center center / cover no-repeat;
       position: relative;
-      overflow: hidden;
     }
-    .hero::before {
+    .hero::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at 80% 50%, rgba(192,57,43,0.08) 0%, transparent 70%);
+      background: linear-gradient(to right, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.3) 100%);
       pointer-events: none;
+    }
+    .hero > * {
+      position: relative;
+      z-index: 1;
     }
     .hero-eyebrow {
       font-family: 'Courier New', monospace;
@@ -56,10 +59,11 @@
       line-height: 1.1;
       max-width: 14ch;
       margin-bottom: 1.5rem;
+      color: #fff;
     }
     .hero h1 em {
-      font-style: italic;
-      color: var(--gold);
+      font-style: normal;
+      color: #fff;
     }
     .hero-sub {
       font-size: clamp(1rem, 2.2vw, 1.25rem);
@@ -98,6 +102,7 @@
       font-weight: normal;
       line-height: 1.2;
       margin-bottom: 1.5rem;
+      color: #fff;
     }
     p {
       font-size: clamp(1rem, 1.8vw, 1.125rem);
@@ -149,33 +154,21 @@
     }
     svg text { font-family: 'Georgia', serif; }
 
-    /* ── STAT CARDS (graphic 1) ── */
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1.5rem;
-      margin: 2.5rem 0;
+    /* ── AI2HTML ARTBOARD VISIBILITY ── */
+    #g-template-medium, #g-chart_2-medium { display: none; }
+    #g-template-laptop, #g-chart_2-laptop { display: none; }
+    #g-template-mobile, #g-chart_2-mobile { display: none; }
+    @media (min-width: 620px) {
+      #g-template-medium { display: block; }
+      #g-chart_2-medium  { display: block; }
     }
-    .stat-card {
-      background: var(--card);
-      border: 1px solid #2a2a2a;
-      border-radius: 4px;
-      padding: 1.5rem 1.25rem;
-      text-align: center;
+    @media (min-width: 490px) and (max-width: 619px) {
+      #g-template-laptop { display: block; }
+      #g-chart_2-laptop  { display: block; }
     }
-    .stat-card .big {
-      font-size: clamp(2rem, 5vw, 3rem);
-      color: var(--gold);
-      line-height: 1;
-      margin-bottom: 0.5rem;
-    }
-    .stat-card .label {
-      font-family: 'Courier New', monospace;
-      font-size: 0.72rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      line-height: 1.4;
+    @media (max-width: 489px) {
+      #g-template-mobile { display: block; }
+      #g-chart_2-mobile  { display: block; }
     }
 
     /* ── TIMELINE (graphic 3) ── */
@@ -268,11 +261,15 @@
 
 <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
 <div class="hero">
-  <p class="hero-eyebrow">Art Crime &bull; Investigation &bull; Unsolved</p>
+  <p class="hero-eyebrow">Art Crime &bull; Unsolved</p>
   <h1>The Art of <em>Getting Away</em> With It</h1>
   <p class="hero-sub">
-    Every year, tens of thousands of artworks vanish from museums, galleries, and private homes.
-    Most are never found. Almost no one goes to prison. And the thieves know it.
+    This narrative is a remix of the interactive infographic
+    <em>"Lost but not forgotten: A look at famous art heists around the world"</em>,
+    originally published at the
+    <a href="https://www.informationisbeautifulawards.com/showcase/5597-lost-but-not-forgotten" target="_blank" style="color:var(--muted);">Information Is Beautiful Awards</a>.
+    All data and stories are drawn from that original work.
+    This page was created for a class assignment only and makes no claim to original research.
   </p>
   <p class="hero-scroll">Scroll to investigate &darr;</p>
 </div>
@@ -280,49 +277,168 @@
 <!-- ═══════════════════════════════ SECTION 1 ═══════════════════════════════ -->
 <section>
   <p class="section-label">Part I</p>
-  <h2>A Perfect Crime — By the Numbers</h2>
+  <h2>A perfect crime in numbers</h2>
   <p>
-    Art theft sounds like something out of a movie: a laser grid, a tuxedo, a getaway
-    through the Parisian rain. The reality is far more mundane — and far more common.
-    An estimated <strong style="color:var(--gold)">50,000 art thefts</strong> occur every year worldwide,
-    making it one of the largest criminal enterprises on the planet, trailing only drugs,
-    money laundering, and arms trafficking.
-  </p>
-  <p>
-    The FBI estimates the black-market art trade is worth somewhere around
-    <strong style="color:var(--gold)">$7 billion annually</strong>. And yet the odds of prosecution
-    are almost laughably low. When your take has no serial number and your fence has a
-    Russian oligarch on speed dial, why wouldn't you try?
+    Of the estimated 50,000 works of art stolen every year, only about one in ten will ever be seen again. The rest vanish, absorbed into private collections, smuggled across borders, or simply hidden away, sometimes for decades. Recovery almost never happens by accident. It takes tipoffs, undercover operations, or a thief trying to sell a painting so famous that every dealer in the world knows to call the police. For the other 90%, the trail goes cold fast.
   </p>
 </section>
 
-<!-- ── GRAPHIC 1: Stat Cards ── -->
+<!-- ── GRAPHIC 1: ai2html ── -->
 <section class="wide">
-  <div class="chart-wrap">
-    <div class="chart-title">How big is the problem?</div>
-    <div class="chart-dek">Global art theft, annually</div>
-    <div class="stat-grid" id="stat-grid"></div>
-    <div id="recovery-chart"></div>
-  </div>
-</section>
+  <div class="chart-wrap" style="background:none; border:none; padding:0;">
 
-<section>
-  <p>
-    That last number — just <strong style="color:var(--accent)">1.5%</strong> of cases ending in prosecution
-    — is what makes art theft so attractive to professional criminals. Interpol and the
-    FBI have dedicated art crime units, but they're small, underfunded, and dealing with
-    a global problem that respects no border.
-  </p>
-  <div class="pull-quote">
-    <p>"Art theft is one of the most underreported crimes in the world.
-    Owners are often too embarrassed — or too afraid of the insurance complications — to call the police."</p>
+<!-- Generated by ai2html v0.102.0 - 2026-04-06 01:59 -->
+<!-- ai file: template.ai -->
+<style media="screen,print">
+	#g-template-box ,
+	#g-template-box .g-artboard {
+		margin:0 auto;
+	}
+	#g-template-box p {
+		margin:0;
+	}
+	#g-template-box .g-aiAbs {
+		position:absolute;
+	}
+	#g-template-box .g-aiImg {
+		position:absolute;
+		top:0;
+		display:block;
+		width:100% !important;
+	}
+	#g-template-box .g-aiSymbol {
+		position: absolute;
+		box-sizing: border-box;
+	}
+	#g-template-box .g-aiPointText p { white-space: nowrap; }
+	#g-template-medium {
+		position:relative;
+		overflow:hidden;
+	}
+	#g-template-medium p {
+		font-weight:700;
+		line-height:28px;
+		height:auto;
+		opacity:1;
+		letter-spacing:0em;
+		font-size:23px;
+		text-align:left;
+		color:rgb(255,255,255);
+		text-transform:none;
+		padding-bottom:0;
+		padding-top:0;
+		mix-blend-mode:normal;
+		font-style:normal;
+		position:static;
+	}
+	#g-template-medium .g-pstyle0 { height:28px; }
+	#g-template-medium .g-pstyle1 { height:28px; color:rgb(228,41,34); }
+	#g-template-medium .g-cstyle0 { color:rgb(226,6,19); }
+	#g-template-medium .g-cstyle1 { color:rgb(228,38,33); }
+	#g-template-medium .g-cstyle2 { color:rgb(255,255,255); }
+	#g-template-laptop {
+		position:relative;
+		overflow:hidden;
+	}
+	#g-template-laptop p {
+		font-weight:700;
+		line-height:21px;
+		height:auto;
+		opacity:1;
+		letter-spacing:0em;
+		font-size:18px;
+		text-align:left;
+		color:rgb(255,255,255);
+		text-transform:none;
+		padding-bottom:0;
+		padding-top:0;
+		mix-blend-mode:normal;
+		font-style:normal;
+		position:static;
+	}
+	#g-template-laptop .g-pstyle0 { height:21px; }
+	#g-template-laptop .g-pstyle1 { height:21px; color:rgb(228,41,34); }
+	#g-template-laptop .g-cstyle0 { color:rgb(226,6,19); }
+	#g-template-laptop .g-cstyle1 { color:rgb(255,255,255); }
+	#g-template-laptop .g-cstyle2 { color:rgb(228,38,33); }
+	#g-template-mobile {
+		position:relative;
+		overflow:hidden;
+	}
+	#g-template-mobile p {
+		font-weight:700;
+		line-height:20px;
+		height:auto;
+		opacity:1;
+		letter-spacing:0em;
+		font-size:17px;
+		text-align:left;
+		color:rgb(255,255,255);
+		text-transform:none;
+		padding-bottom:0;
+		padding-top:0;
+		mix-blend-mode:normal;
+		font-style:normal;
+		position:static;
+	}
+	#g-template-mobile .g-pstyle0 { height:20px; }
+	#g-template-mobile .g-pstyle1 { height:20px; color:rgb(228,41,34); }
+	#g-template-mobile .g-cstyle0 { color:rgb(226,6,19); }
+	#g-template-mobile .g-cstyle1 { color:rgb(228,38,33); }
+	#g-template-mobile .g-cstyle2 { color:rgb(255,255,255); }
+</style>
+
+<div id="g-template-box" class="ai2html">
+
+	<!-- Artboard: medium -->
+	<div id="g-template-medium" class="g-artboard" style="width:620px; height:425px;" data-aspect-ratio="1.459" data-min-width="620">
+		<div style=""></div>
+		<img id="g-template-medium-img" class="g-aiImg" alt="" src="template-medium.png"/>
+		<div id="g-ai0-1" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:14.6511%;margin-top:-32.3px;left:5.3179%;width:250px;">
+			<p class="g-pstyle0">Only <span class="g-cstyle0">10% </span>of stolen </p>
+			<p class="g-pstyle0">works are <span class="g-cstyle1">recovered</span></p>
+		</div>
+		<div id="g-ai0-2" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:17.9589%;margin-top:-46.3px;left:54.1625%;width:241px;">
+			<p class="g-pstyle0">Only <span class="g-cstyle0">1.5%</span> of cases </p>
+			<p class="g-pstyle1"><span class="g-cstyle2">end in </span>recovery </p>
+			<p class="g-pstyle1"><span class="g-cstyle2">and </span>prosecution</p>
+		</div>
+	</div>
+
+	<!-- Artboard: laptop -->
+	<div id="g-template-laptop" class="g-artboard" style="width:490px; height:350px;" data-aspect-ratio="1.4" data-min-width="490" data-max-width="619">
+		<div style=""></div>
+		<img id="g-template-laptop-img" class="g-aiImg" alt="" src="template-laptop.png"/>
+		<div id="g-ai1-1" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:22.8499%;margin-top:-35px;left:54.5249%;width:189px;">
+			<p class="g-pstyle0">Only <span class="g-cstyle0">1.5%</span> of cases </p>
+			<p class="g-pstyle1"><span class="g-cstyle1">end in </span>recovery </p>
+			<p class="g-pstyle1"><span class="g-cstyle1">and </span>prosecution</p>
+		</div>
+		<div id="g-ai1-2" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:19.7818%;margin-top:-24.2px;left:7.3174%;width:196px;">
+			<p class="g-pstyle0">Only <span class="g-cstyle0">10% </span>of stolen </p>
+			<p class="g-pstyle0">works are <span class="g-cstyle2">recovered</span></p>
+		</div>
+	</div>
+
+	<!-- Artboard: mobile -->
+	<div id="g-template-mobile" class="g-artboard" style="max-width: 375px;max-height: 626px" data-aspect-ratio="0.599" data-min-width="0" data-max-width="489">
+		<div style="padding: 0 0 166.88% 0;"></div>
+		<img id="g-template-mobile-img" class="g-aiImg" alt="" src="template-mobile.png"/>
+		<div id="g-ai2-1" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:9.4413%;margin-top:-23.1px;left:22.4411%;width:187px;">
+			<p class="g-pstyle0">Only <span class="g-cstyle0">10% </span>of stolen </p>
+			<p class="g-pstyle0">works are <span class="g-cstyle1">recovered</span></p>
+		</div>
+		<div id="g-ai2-2" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:57.5707%;margin-top:-33.3px;left:22.5979%;width:181px;">
+			<p class="g-pstyle0">Only <span class="g-cstyle0">1.5%</span> of cases </p>
+			<p class="g-pstyle1"><span class="g-cstyle2">end in </span>recovery </p>
+			<p class="g-pstyle1"><span class="g-cstyle2">and </span>prosecution</p>
+		</div>
+	</div>
+
+</div>
+<!-- End ai2html - 2026-04-06 01:59 -->
+
   </div>
-  <p>
-    Much of what's stolen never makes it to auction. Instead, it circulates as collateral
-    in criminal networks — a Renoir as a down payment on a drug shipment, a stolen Degas
-    as a get-out-of-jail-free card to be handed back in exchange for a lighter sentence.
-    The paintings themselves are almost beside the point.
-  </p>
 </section>
 
 <hr class="divider">
@@ -330,31 +446,144 @@
 <!-- ═══════════════════════════════ SECTION 2 ═══════════════════════════════ -->
 <section>
   <p class="section-label">Part II</p>
-  <h2>The Most Stolen Artist in the World Is Probably Not Who You Think</h2>
+  <h2>The most stolen artist in the world</h2>
   <p>
-    If you were going to steal a painting, which artist would you choose? Picasso,
-    obviously — he's the most famous, the most expensive, the most recognizable name
-    in modern art. And yes, Picasso makes the list.
-  </p>
-  <p>
-    But the artist who has had more works stolen than almost any other is
-    <strong style="color:var(--gold)">Claude Monet</strong>. The man who painted haystacks and water lilies
-    has, improbably, become the patron saint of art thieves.
-  </p>
-  <p>
-    Why impressionists? They're expensive enough to matter, recognizable enough to sell
-    (or use as collateral), and numerous enough that the provenance is murky.
-    The same artists who were revolutionary in the 1870s are the targets of choice
-    in criminal networks today.
+    Monet. Picasso. Rembrandt. The most stolen artists read like a museum wall of fame, which is, of course, exactly the point. Thieves don't steal obscure work. They steal names, because names carry value that transcends any single painting. A Picasso is recognizable to someone who has never set foot in a gallery. That recognition is the whole game. The irony is that it also makes these works nearly impossible to sell openly, which is why so many end up used as collateral in criminal deals, or locked in a crate somewhere, unseen by anyone. Stolen not to be enjoyed — just to be owned.
   </p>
 </section>
 
-<!-- ── GRAPHIC 2: Bar Chart – Most Targeted Artists ── -->
-<section class="wide">
-  <div class="chart-wrap">
-    <div class="chart-title">Which artists are most often stolen?</div>
-    <div class="chart-dek">Number of known stolen works, selected artists</div>
-    <div id="artists-chart"></div>
+<!-- ── GRAPHIC 2: ai2html ── -->
+<section class="wide" style="padding-top: 1rem; padding-bottom: 1rem;">
+  <div class="chart-wrap" style="background:none; border:none; padding:0;">
+
+<!-- Generated by ai2html v0.102.0 - 2026-04-06 01:59 -->
+<!-- ai file: chart_2.ai -->
+<style media="screen,print">
+	#g-chart_2-box,
+	#g-chart_2-box .g-artboard { margin:0 auto; }
+	#g-chart_2-box p { margin:0; }
+	#g-chart_2-box .g-aiAbs { position:absolute; }
+	#g-chart_2-box .g-aiImg { position:absolute; top:0; display:block; width:100% !important; }
+	#g-chart_2-box .g-aiSymbol { position:absolute; box-sizing:border-box; }
+	#g-chart_2-box .g-aiPointText p { white-space:nowrap; }
+	#g-chart_2-medium { position:relative; overflow:hidden; }
+	#g-chart_2-medium p { font-weight:500; line-height:10px; opacity:1; letter-spacing:0em; font-size:9px; text-align:left; color:rgb(255,255,255); text-transform:none; padding-bottom:0; padding-top:0; mix-blend-mode:normal; font-style:normal; height:auto; position:static; }
+	#g-chart_2-medium .g-pstyle0 { font-weight:700; line-height:18px; font-size:15px; color:rgb(255,255,255); }
+	#g-chart_2-medium .g-pstyle1 { text-align:left; white-space:nowrap; color:rgb(127,127,127); }
+	#g-chart_2-medium .g-pstyle2 { text-align:right; white-space:nowrap; }
+	#g-chart_2-medium .g-aiAbs:has(.g-pstyle2),
+	#g-chart_2-medium .g-aiAbs:has(.g-pstyle4) { transform: translateX(-18px); }
+	#g-chart_2-medium .g-pstyle3 { height:10px; font-size:8px; text-align:justify; color:rgb(255,255,255); }
+	#g-chart_2-medium .g-pstyle4 { height:10px; text-align:justify; }
+	#g-chart_2-laptop { position:relative; overflow:hidden; }
+	#g-chart_2-laptop p { font-weight:500; line-height:8px; opacity:1; letter-spacing:0em; font-size:7px; text-align:left; color:rgb(255,255,255); text-transform:none; padding-bottom:0; padding-top:0; mix-blend-mode:normal; font-style:normal; height:auto; position:static; }
+	#g-chart_2-laptop .g-pstyle0 { font-weight:700; line-height:15px; font-size:12px; color:rgb(255,255,255); }
+	#g-chart_2-laptop .g-pstyle1 { text-align:left; white-space:nowrap; color:rgb(127,127,127); }
+	#g-chart_2-laptop .g-pstyle2 { text-align:right; white-space:nowrap; }
+	#g-chart_2-laptop .g-aiAbs:has(.g-pstyle2),
+	#g-chart_2-laptop .g-aiAbs:has(.g-pstyle4) { transform: translateX(-14px); }
+	#g-chart_2-laptop .g-pstyle3 { height:8px; text-align:justify; color:rgb(255,255,255); }
+	#g-chart_2-laptop .g-pstyle4 { height:8px; text-align:justify; }
+	#g-chart_2-mobile { position:relative; overflow:hidden; }
+	#g-chart_2-mobile p { font-weight:500; line-height:9px; opacity:1; letter-spacing:0em; font-size:8px; text-align:left; color:rgb(255,255,255); text-transform:none; padding-bottom:0; padding-top:0; mix-blend-mode:normal; font-style:normal; height:auto; position:static; }
+	#g-chart_2-mobile .g-pstyle0 { font-weight:700; line-height:16px; font-size:14px; color:rgb(255,255,255); }
+	#g-chart_2-mobile .g-pstyle1 { text-align:left; white-space:nowrap; color:rgb(127,127,127); }
+	#g-chart_2-mobile .g-pstyle2 { text-align:right; white-space:nowrap; }
+	#g-chart_2-mobile .g-aiAbs:has(.g-pstyle2),
+	#g-chart_2-mobile .g-aiAbs:has(.g-pstyle4) { transform: translateX(-12px); }
+	#g-chart_2-mobile .g-pstyle3 { height:9px; text-align:justify; color:rgb(255,255,255); }
+	#g-chart_2-mobile .g-pstyle4 { height:9px; text-align:justify; }
+</style>
+
+<div id="g-chart_2-box" class="ai2html">
+
+	<!-- Artboard: medium -->
+	<div id="g-chart_2-medium" class="g-artboard" style="width:620px; height:425px;" data-aspect-ratio="1.459" data-min-width="620">
+		<div style=""></div>
+		<img id="g-chart_2-medium-img" class="g-aiImg" alt="" src="chart_2-medium.png"/>
+		<div id="g-ai0-1" class="g-ai2html-settings g-aiAbs" style="top:4.2353%;left:30.533%;width:52.9032%;"><p class="g-pstyle0">Monet is art theft's biggest target</p></div>
+		<div id="g-ai0-2" class="g-ai2html-settings g-aiAbs" style="top:9.6471%;left:30.7161%;width:20%;"><p class="g-pstyle1">Number of works stolen by artist</p></div>
+		<div id="g-ai0-3" class="g-ai2html-settings g-aiAbs" style="top:15.7647%;left:21.6025%;width:8.5484%;"><p class="g-pstyle2">Claude Monet</p></div>
+		<div id="g-ai0-4" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:17.2125%;margin-top:-6.2px;left:72.4293%;width:31px;"><p class="g-pstyle3">11</p></div>
+		<div id="g-ai0-5" class="g-ai2html-settings g-aiAbs" style="top:24.2353%;left:23.3613%;width:6.7742%;"><p class="g-pstyle2">Rembrandt</p></div>
+		<div id="g-ai0-6" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:25.6831%;margin-top:-6.2px;left:65.2336%;width:27px;"><p class="g-pstyle3">9</p></div>
+		<div id="g-ai0-7" class="g-ai2html-settings g-aiAbs" style="top:32.7059%;left:21.4501%;width:8.7097%;"><p class="g-pstyle2">Pablo Picasso</p></div>
+		<div id="g-ai0-8" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:34.1537%;margin-top:-6.2px;left:61.2759%;width:27px;"><p class="g-pstyle3">8</p></div>
+		<div id="g-ai0-9" class="g-ai2html-settings g-aiAbs" style="top:41.1765%;left:22.1375%;width:8.0645%;"><p class="g-pstyle2">Edgar Degas</p></div>
+		<div id="g-ai0-10" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:42.389%;margin-top:-6.2px;left:61.132%;width:27px;"><p class="g-pstyle3">8</p></div>
+		<div id="g-ai0-11" class="g-ai2html-settings g-aiAbs" style="top:49.4118%;left:19.2577%;width:10.9677%;"><p class="g-pstyle2">Vincent van Gogh</p></div>
+		<div id="g-ai0-12" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:50.8596%;margin-top:-6.2px;left:56.8864%;width:27px;"><p class="g-pstyle3">7</p></div>
+		<div id="g-ai0-13" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:59.3434%;margin-top:-6.2px;left:21.7582%;width:74px;"><p class="g-pstyle4">Henri Matisse</p></div>
+		<div id="g-ai0-14" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:59.3302%;margin-top:-6.2px;left:52.9528%;width:27px;"><p class="g-pstyle3">6</p></div>
+		<div id="g-ai0-15" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:67.814%;margin-top:-6.2px;left:16.5603%;width:106px;"><p class="g-pstyle4">Pierre-Auguste Renoir</p></div>
+		<div id="g-ai0-16" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:67.5655%;margin-top:-6.2px;left:48.8016%;width:27px;"><p class="g-pstyle3">5</p></div>
+		<div id="g-ai0-17" class="g-ai2html-settings g-aiAbs" style="top:74.8235%;left:21.5253%;width:8.7097%;"><p class="g-pstyle2">Paul Cézanne</p></div>
+		<div id="g-ai0-18" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:76.0361%;margin-top:-6.2px;left:40.9956%;width:27px;"><p class="g-pstyle3">3</p></div>
+		<div id="g-ai0-19" class="g-ai2html-settings g-aiAbs" style="top:83.0588%;left:19.6074%;width:10.4839%;"><p class="g-pstyle2">Georgia O'Keeffe</p></div>
+		<div id="g-ai0-20" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:84.5067%;margin-top:-6.2px;left:41.0532%;width:27px;"><p class="g-pstyle3">3</p></div>
+		<div id="g-ai0-21" class="g-ai2html-settings g-aiAbs" style="top:91.5294%;left:21.2226%;width:8.871%;"><p class="g-pstyle2">Berthe Morisot</p></div>
+		<div id="g-ai0-22" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:92.9773%;margin-top:-6.2px;left:41.1107%;width:27px;"><p class="g-pstyle3">3</p></div>
+	</div>
+
+	<!-- Artboard: laptop -->
+	<div id="g-chart_2-laptop" class="g-artboard" style="width:490px; height:350px;" data-aspect-ratio="1.4" data-min-width="490" data-max-width="619">
+		<div style=""></div>
+		<img id="g-chart_2-laptop-img" class="g-aiImg" alt="" src="chart_2-laptop.png"/>
+		<div id="g-ai1-1" class="g-ai2html-settings g-aiAbs" style="top:6.8571%;left:32.3282%;width:54.0816%;"><p class="g-pstyle0">Monet is art theft's biggest target</p></div>
+		<div id="g-ai1-2" class="g-ai2html-settings g-aiAbs" style="top:12.2857%;left:32.5157%;width:20.4082%;"><p class="g-pstyle1">Number of works stolen by artist</p></div>
+		<div id="g-ai1-3" class="g-ai2html-settings g-aiAbs" style="top:18.2857%;left:23.1813%;width:8.7755%;"><p class="g-pstyle2">Claude Monet</p></div>
+		<div id="g-ai1-4" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:19.6204%;margin-top:-4.7px;left:75.2394%;width:30px;"><p class="g-pstyle3">11</p></div>
+		<div id="g-ai1-5" class="g-ai2html-settings g-aiAbs" style="top:26.5714%;left:24.9827%;width:6.9388%;"><p class="g-pstyle2">Rembrandt</p></div>
+		<div id="g-ai1-6" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:28.1918%;margin-top:-4.7px;left:67.8695%;width:26px;"><p class="g-pstyle3">9</p></div>
+		<div id="g-ai1-7" class="g-ai2html-settings g-aiAbs" style="top:34.8571%;left:23.0253%;width:8.9796%;"><p class="g-pstyle2">Pablo Picasso</p></div>
+		<div id="g-ai1-8" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:36.1918%;margin-top:-4.7px;left:63.8158%;width:26px;"><p class="g-pstyle3">8</p></div>
+		<div id="g-ai1-9" class="g-ai2html-settings g-aiAbs" style="top:43.1429%;left:23.7293%;width:8.1633%;"><p class="g-pstyle2">Edgar Degas</p></div>
+		<div id="g-ai1-10" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:44.4775%;margin-top:-4.7px;left:63.6685%;width:26px;"><p class="g-pstyle3">8</p></div>
+		<div id="g-ai1-11" class="g-ai2html-settings g-aiAbs" style="top:51.4286%;left:20.7797%;width:11.2245%;"><p class="g-pstyle2">Vincent van Gogh</p></div>
+		<div id="g-ai1-12" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:52.7633%;margin-top:-4.7px;left:59.32%;width:26px;"><p class="g-pstyle3">7</p></div>
+		<div id="g-ai1-13" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:61.1776%;margin-top:-5.1px;left:23.341%;width:64px;"><p class="g-pstyle4">Henri Matisse</p></div>
+		<div id="g-ai1-14" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:61.049%;margin-top:-4.7px;left:55.291%;width:26px;"><p class="g-pstyle3">6</p></div>
+		<div id="g-ai1-15" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:69.4633%;margin-top:-5.1px;left:18.0172%;width:90px;"><p class="g-pstyle4">Pierre-Auguste Renoir</p></div>
+		<div id="g-ai1-16" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:69.3347%;margin-top:-4.7px;left:51.0393%;width:26px;"><p class="g-pstyle3">5</p></div>
+		<div id="g-ai1-17" class="g-ai2html-settings g-aiAbs" style="top:76.2857%;left:23.1023%;width:8.7755%;"><p class="g-pstyle2">Paul Cézanne</p></div>
+		<div id="g-ai1-18" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:77.6204%;margin-top:-4.7px;left:43.0445%;width:26px;"><p class="g-pstyle3">3</p></div>
+		<div id="g-ai1-19" class="g-ai2html-settings g-aiAbs" style="top:84.5714%;left:21.1379%;width:10.8163%;"><p class="g-pstyle2">Georgia O'Keeffe</p></div>
+		<div id="g-ai1-20" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:85.9061%;margin-top:-4.7px;left:43.1033%;width:26px;"><p class="g-pstyle3">3</p></div>
+		<div id="g-ai1-21" class="g-ai2html-settings g-aiAbs" style="top:92.5714%;left:22.7922%;width:9.1837%;"><p class="g-pstyle2">Berthe Morisot</p></div>
+		<div id="g-ai1-22" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:93.9061%;margin-top:-4.7px;left:43.1623%;width:26px;"><p class="g-pstyle3">3</p></div>
+	</div>
+
+	<!-- Artboard: mobile -->
+	<div id="g-chart_2-mobile" class="g-artboard" style="max-width: 375px;max-height: 626px" data-aspect-ratio="0.599" data-min-width="0" data-max-width="489">
+		<div style="padding: 0 0 166.88% 0;"></div>
+		<img id="g-chart_2-mobile-img" class="g-aiImg" alt="" src="chart_2-mobile.png"/>
+		<div id="g-ai2-1" class="g-ai2html-settings g-aiAbs" style="top:24.1291%;left:24.9909%;width:77.3333%;"><p class="g-pstyle0">Monet is art theft's biggest target</p></div>
+		<div id="g-ai2-2" class="g-ai2html-settings g-aiAbs" style="top:27.325%;left:25.2585%;width:29.3333%;"><p class="g-pstyle1">Number of works stolen by artist</p></div>
+		<div id="g-ai2-3" class="g-ai2html-settings g-aiAbs" style="top:31.1601%;left:11.9381%;width:12.5333%;"><p class="g-pstyle2">Claude Monet</p></div>
+		<div id="g-ai2-4" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:31.968%;margin-top:-5.1px;left:86.2263%;width:30px;"><p class="g-pstyle3">11</p></div>
+		<div id="g-ai2-5" class="g-ai2html-settings g-aiAbs" style="top:36.1138%;left:14.5088%;width:9.8667%;"><p class="g-pstyle2">Rembrandt</p></div>
+		<div id="g-ai2-6" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:37.0814%;margin-top:-5.1px;left:75.7094%;width:26px;"><p class="g-pstyle3">9</p></div>
+		<div id="g-ai2-7" class="g-ai2html-settings g-aiAbs" style="top:41.2272%;left:11.7154%;width:12.8%;"><p class="g-pstyle2">Pablo Picasso</p></div>
+		<div id="g-ai2-8" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:42.0351%;margin-top:-5.1px;left:69.9247%;width:26px;"><p class="g-pstyle3">8</p></div>
+		<div id="g-ai2-9" class="g-ai2html-settings g-aiAbs" style="top:46.1809%;left:12.7201%;width:11.7333%;"><p class="g-pstyle2">Edgar Degas</p></div>
+		<div id="g-ai2-10" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:47.1486%;margin-top:-5.1px;left:69.7143%;width:26px;"><p class="g-pstyle3">8</p></div>
+		<div id="g-ai2-11" class="g-ai2html-settings g-aiAbs" style="top:51.2943%;left:8.511%;width:16%;"><p class="g-pstyle2">Vincent van Gogh</p></div>
+		<div id="g-ai2-12" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:52.1022%;margin-top:-5.1px;left:63.5091%;width:26px;"><p class="g-pstyle3">7</p></div>
+		<div id="g-ai2-13" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:57.2942%;margin-top:-5.5px;left:12.1656%;width:68px;"><p class="g-pstyle4">Henri Matisse</p></div>
+		<div id="g-ai2-14" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:57.2157%;margin-top:-5.1px;left:57.7596%;width:26px;"><p class="g-pstyle3">6</p></div>
+		<div id="g-ai2-15" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:62.2478%;margin-top:-5.5px;left:4.5688%;width:97px;"><p class="g-pstyle4">Pierre-Auguste Renoir</p></div>
+		<div id="g-ai2-16" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:62.1693%;margin-top:-5.1px;left:51.6922%;width:26px;"><p class="g-pstyle3">5</p></div>
+		<div id="g-ai2-17" class="g-ai2html-settings g-aiAbs" style="top:66.4749%;left:11.8253%;width:12.5333%;"><p class="g-pstyle2">Paul Cézanne</p></div>
+		<div id="g-ai2-18" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:67.2828%;margin-top:-5.1px;left:40.2831%;width:26px;"><p class="g-pstyle3">3</p></div>
+		<div id="g-ai2-19" class="g-ai2html-settings g-aiAbs" style="top:71.4286%;left:9.0222%;width:15.4667%;"><p class="g-pstyle2">Georgia O'Keeffe</p></div>
+		<div id="g-ai2-20" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:72.2364%;margin-top:-5.1px;left:40.3674%;width:26px;"><p class="g-pstyle3">3</p></div>
+		<div id="g-ai2-21" class="g-ai2html-settings g-aiAbs" style="top:76.542%;left:11.3828%;width:13.0667%;"><p class="g-pstyle2">Berthe Morisot</p></div>
+		<div id="g-ai2-22" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:77.3499%;margin-top:-5.1px;left:40.4513%;width:26px;"><p class="g-pstyle3">3</p></div>
+	</div>
+
+</div>
+<!-- End ai2html - 2026-04-06 01:59 -->
+
   </div>
 </section>
 
@@ -371,92 +600,19 @@
   </p>
 </section>
 
-<hr class="divider">
-
-<!-- ═══════════════════════════════ SECTION 3 ═══════════════════════════════ -->
-<section>
-  <p class="section-label">Part III</p>
-  <h2>The Night Boston Lost Half a Billion Dollars</h2>
-  <p>
-    The Isabella Stewart Gardner Museum is a palazzo-style building in the Fenway
-    neighborhood of Boston — the kind of place where you feel like you're in Florence,
-    not Massachusetts. Isabella Gardner, an eccentric heiress, filled it with her
-    personal collection and stipulated in her will that nothing could be moved or changed
-    after her death. The empty frames still hang on the walls today.
-  </p>
-  <p>
-    In the early morning hours of <strong style="color:var(--gold)">March 18, 1990</strong>, two men
-    dressed as Boston police officers buzzed the security intercom. A guard — violating
-    museum protocol — let them in. What followed was 81 minutes that the FBI calls
-    the single largest private property theft in history.
-  </p>
-
-  <div class="works-grid">
-    <div class="work-card">
-      <div class="work-title">The Storm on the Sea of Galilee</div>
-      <div class="work-artist">Rembrandt van Rijn</div>
-      <div class="work-val">Est. value: $200M+<br>Only seascape Rembrandt ever painted</div>
-    </div>
-    <div class="work-card">
-      <div class="work-title">The Concert</div>
-      <div class="work-artist">Johannes Vermeer</div>
-      <div class="work-val">Est. value: $200M+<br>One of only 34 known Vermeers</div>
-    </div>
-    <div class="work-card">
-      <div class="work-title">Chez Tortoni</div>
-      <div class="work-artist">Édouard Manet</div>
-      <div class="work-val">Est. value: $10M+<br>Guard's logbook showed no sign-in that night</div>
-    </div>
-    <div class="work-card">
-      <div class="work-title">A Lady and Gentleman in Black</div>
-      <div class="work-artist">Rembrandt van Rijn</div>
-      <div class="work-val">Est. value: $140M<br>Cut from its frame with a knife</div>
-    </div>
-  </div>
-
-  <p>
-    Thirteen works in all. Total estimated value: <strong style="color:var(--gold)">$500 million</strong>.
-    The thieves spent about six and a half minutes per painting. They knew what they
-    wanted — or at least, they had a list.
-  </p>
-</section>
-
-<!-- ── GRAPHIC 3: Timeline ── -->
 <section class="wide">
-  <div class="chart-wrap timeline-wrap">
-    <div class="chart-title">The 81-Minute Heist</div>
-    <div class="chart-dek">March 18, 1990 — Isabella Stewart Gardner Museum, Boston</div>
-    <div id="timeline"></div>
-  </div>
+  <figure style="margin: 0;">
+    <img
+      src="https://images.unsplash.com/photo-1689018906734-8eeb1ef2ab07?q=80&w=1325&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Cliff Walk at Pourville, 1882. Claude Monet (French, 1840–1926)"
+      style="width:100%; display:block; max-height:520px; object-fit:cover;"
+    />
+    <figcaption style="font-family:'Courier New',monospace; font-size:0.72rem; color:#666; padding:0.6rem 0 0; text-align:right;">
+      <em>Cliff Walk at Pourville</em>, 1882 &mdash; Claude Monet (French, 1840&ndash;1926) &mdash; Photo: <a href="https://unsplash.com/photos/a-painting-of-a-person-standing-on-a-cliff-overlooking-the-ocean-fja2UYOT6jg" target="_blank" style="color:#666;">Unsplash</a>
+    </figcaption>
+  </figure>
 </section>
 
-<section>
-  <p>
-    By 2:45 AM, the thieves were gone. The guard was found handcuffed to a pipe in the
-    basement. No one saw the van leave. No cameras caught a usable image. No fingerprints,
-    no DNA, no witnesses.
-  </p>
-  <p>
-    The FBI has named suspects. The museum has offered a
-    <strong style="color:var(--gold)">$10 million reward</strong> — the largest private reward for
-    stolen art in history. More than three decades later, the case remains open.
-    The empty frames hang where the paintings used to be: a standing invitation to whoever
-    knows where they went.
-  </p>
-  <div class="pull-quote">
-    <p>
-      "We believe the art is still out there. Paintings of that caliber don't
-      just disappear. They're somewhere, in someone's possession, waiting."
-      <br><span style="font-size:0.8rem;color:var(--muted);font-style:normal;">— FBI Art Crime Team</span>
-    </p>
-  </div>
-  <p>
-    And that, in the end, is what makes art theft so different from any other crime.
-    The objects survive. The Rembrandt is still a Rembrandt whether it's on the wall of
-    the Rijksmuseum or rolled up in a storage unit in Philadelphia. The crime never
-    really ends — it just waits.
-  </p>
-</section>
 
 <!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
 <footer>
@@ -475,186 +631,8 @@
 </footer>
 
 <script>
-/* ============================================================
-   GRAPHIC 1 — Stat Cards + Recovery Donut
-   ============================================================ */
-const stats = [
-  { big: "50,000", label: "estimated art thefts per year, worldwide" },
-  { big: "$7B",    label: "annual value of black-market art trade" },
-  { big: "10%",    label: "of stolen works ever recovered" },
-  { big: "1.5%",   label: "of cases end in prosecution" },
-];
-
-const grid = document.getElementById("stat-grid");
-stats.forEach(s => {
-  const card = document.createElement("div");
-  card.className = "stat-card";
-  card.innerHTML = `<div class="big">${s.big}</div><div class="label">${s.label}</div>`;
-  grid.appendChild(card);
-});
-
-// Recovery donut chart
-(function drawDonut() {
-  const container = document.getElementById("recovery-chart");
-  const W = Math.min(container.clientWidth, 500);
-  const H = 180;
-  const R = 65;
-  const cx = W / 2, cy = H / 2;
-
-  const svg = d3.select(container).append("svg")
-    .attr("viewBox", `0 0 ${W} ${H}`)
-    .attr("width", "100%");
-
-  const data = [
-    { label: "Never recovered", value: 90, color: "#c0392b" },
-    { label: "Recovered", value: 10, color: "#c9a84c" },
-  ];
-
-  const pie = d3.pie().value(d => d.value).sort(null);
-  const arc = d3.arc().innerRadius(R * 0.6).outerRadius(R);
-
-  const g = svg.append("g").attr("transform", `translate(${cx},${cy})`);
-  g.selectAll("path").data(pie(data)).join("path")
-    .attr("d", arc)
-    .attr("fill", d => d.data.color)
-    .attr("stroke", "#1a1a1a")
-    .attr("stroke-width", 2);
-
-  g.append("text").attr("text-anchor", "middle").attr("dy", "-0.25em")
-    .attr("fill", "#c9a84c").attr("font-size", "1.4rem").text("10%");
-  g.append("text").attr("text-anchor", "middle").attr("dy", "1.1em")
-    .attr("fill", "#888").attr("font-size", "0.65rem").text("RECOVERED");
-
-  // legend
-  const legend = svg.append("g").attr("transform", `translate(${cx + R + 20}, ${cy - 20})`);
-  data.forEach((d, i) => {
-    const row = legend.append("g").attr("transform", `translate(0, ${i * 22})`);
-    row.append("rect").attr("width", 12).attr("height", 12).attr("rx", 2).attr("fill", d.color);
-    row.append("text").attr("x", 18).attr("y", 10)
-      .attr("fill", "#ccc").attr("font-size", "0.78rem").text(d.label);
-  });
-})();
 
 
-/* ============================================================
-   GRAPHIC 2 — Horizontal Bar Chart: Most Stolen Artists
-   ============================================================ */
-(function drawBars() {
-  const container = document.getElementById("artists-chart");
-  const artists = [
-    { name: "Claude Monet",        value: 53 },
-    { name: "Rembrandt",           value: 47 },
-    { name: "Pablo Picasso",       value: 43 },
-    { name: "Edgar Degas",         value: 38 },
-    { name: "Vincent van Gogh",    value: 34 },
-    { name: "Henri Matisse",       value: 29 },
-    { name: "Pierre-Auguste Renoir", value: 25 },
-    { name: "Paul Cézanne",        value: 21 },
-    { name: "Georgia O'Keeffe",    value: 14 },
-    { name: "Berthe Morisot",      value: 10 },
-  ];
-
-  const margin = { top: 8, right: 60, bottom: 20, left: 145 };
-
-  function draw() {
-    d3.select(container).selectAll("*").remove();
-    const W = container.clientWidth || 600;
-    const H = artists.length * 34 + margin.top + margin.bottom;
-    const innerW = W - margin.left - margin.right;
-    const innerH = H - margin.top - margin.bottom;
-
-    const svg = d3.select(container).append("svg")
-      .attr("viewBox", `0 0 ${W} ${H}`)
-      .attr("width", "100%");
-
-    const x = d3.scaleLinear().domain([0, 60]).range([0, innerW]);
-    const y = d3.scaleBand()
-      .domain(artists.map(d => d.name))
-      .range([0, innerH])
-      .padding(0.28);
-
-    const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-
-    // grid lines
-    g.selectAll(".grid")
-      .data(x.ticks(5))
-      .join("line")
-      .attr("x1", d => x(d)).attr("x2", d => x(d))
-      .attr("y1", 0).attr("y2", innerH)
-      .attr("stroke", "#2a2a2a").attr("stroke-dasharray", "3,3");
-
-    // bars
-    g.selectAll(".bar")
-      .data(artists)
-      .join("rect")
-      .attr("class", "bar")
-      .attr("x", 0)
-      .attr("y", d => y(d.name))
-      .attr("width", d => x(d.value))
-      .attr("height", y.bandwidth())
-      .attr("fill", (d, i) => i === 0 ? "#c9a84c" : "#c0392b")
-      .attr("rx", 2);
-
-    // value labels
-    g.selectAll(".val-label")
-      .data(artists)
-      .join("text")
-      .attr("x", d => x(d.value) + 6)
-      .attr("y", d => y(d.name) + y.bandwidth() / 2 + 4)
-      .attr("fill", "#888")
-      .attr("font-size", "0.72rem")
-      .text(d => d.value);
-
-    // y-axis labels
-    g.selectAll(".y-label")
-      .data(artists)
-      .join("text")
-      .attr("x", -8)
-      .attr("y", d => y(d.name) + y.bandwidth() / 2 + 4)
-      .attr("text-anchor", "end")
-      .attr("fill", (d, i) => i === 0 ? "#c9a84c" : "#ccc")
-      .attr("font-size", "0.78rem")
-      .text(d => d.name);
-  }
-
-  draw();
-  const ro = new ResizeObserver(draw);
-  ro.observe(container);
-})();
-
-
-/* ============================================================
-   GRAPHIC 3 — Gardner Heist Timeline
-   ============================================================ */
-const events = [
-  { time: "1:24 AM",  title: "Security guard buzzes the thieves in",
-    desc: "Two men in Boston Police uniforms claim to be responding to a disturbance report. Guard violates protocol and admits them." },
-  { time: "1:28 AM",  title: "Guards handcuffed in the basement",
-    desc: "Both security guards are taped and cuffed to pipes in the basement. The thieves have free run of the museum." },
-  { time: "1:48 AM",  title: "Dutch Room — primary target",
-    desc: "Thieves take three Rembrandts, a Vermeer, a Manet, and a Flinck. They cut canvases from frames, leaving the gilded frames behind." },
-  { time: "2:15 AM",  title: "Short Gallery & other rooms",
-    desc: "Five Degas sketches, a Napoleonic finial, and a Chinese gu are removed. Thieves appear to be working from a list." },
-  { time: "2:41 AM",  title: "Motion sensors go dark",
-    desc: "The final movement is recorded. Thirteen works are gone. The thieves depart in an unknown vehicle." },
-  { time: "8:15 AM",  title: "Discovery",
-    desc: "The next security shift finds the guards. Boston Police are called. The FBI takes over within hours." },
-  { time: "2025 →",   title: "Still unsolved",
-    desc: "No arrests. $10M reward still unclaimed. The empty frames remain on the walls of the Gardner, per Isabella's will." },
-];
-
-const tlContainer = document.getElementById("timeline");
-events.forEach(e => {
-  const item = document.createElement("div");
-  item.className = "tl-item";
-  item.innerHTML = `
-    <div class="tl-time">${e.time}</div>
-    <div class="tl-content">
-      <strong>${e.title}</strong>
-      <span>${e.desc}</span>
-    </div>`;
-  tlContainer.appendChild(item);
-});
 </script>
 </body>
 </html>
